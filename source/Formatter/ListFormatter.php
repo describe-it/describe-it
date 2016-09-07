@@ -53,6 +53,25 @@ class ListFormatter extends Formatter
         $count = "({$this->succeededAssertions}/{$this->assertionsCount})";
 
         $this->output("{$this->tabs()}{$icon} {$node->message()} {$count}", $color);
+        if (!$this->succeeded())
+        {
+            $this->outputErrors();
+        }
+
         $this->currentIndentation--;
+    }
+
+    private function outputErrors()
+    {
+        foreach ($this->currentErrors as $index => $error)
+        {
+            if ($index == 0)
+            {
+                $this->output("");
+            }
+            $this->output("{$this->tabs()}  {$error['message']}", self::RED);
+            $this->output("{$this->tabs()}  line: {$error['line']} in {$error['file']}", self::RED);
+            $this->output("");
+        }
     }
 }

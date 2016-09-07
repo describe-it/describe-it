@@ -5,7 +5,7 @@ use Describe\Contracts\IBinding;
 class Expectation
 {
     /** @var mixed */
-    protected $subject;
+    protected $s;
 
     /** @var IBinding */
     protected $binding;
@@ -21,23 +21,23 @@ class Expectation
      */
     public function __construct($subject, IBinding $binding)
     {
-        $this->subject = $subject;
+        $this->s = $subject;
         $this->binding = $binding;
     }
 
     /**
-     * Assert equality.
+     * Assert equal to.
      *
-     * @param mixed $object
+     * @param mixed $o
      *
      * @return void
      */
-    public function equal_to($object)
+    public function equal_to($o)
     {
         $this->assert(
-            $this->subject == $object,
-            "Expected {$this->subject} to be equal to {$object}.",
-            "Expected {$this->subject} to not be equal to {$object}."
+            $this->s == $o,
+            "Expected {$this->e($this->s)} to be equal to {$this->e($o)}.",
+            "Expected {$this->e($this->s)} to not be equal to {$this->e($o)}."
         );
     }
 
@@ -63,5 +63,33 @@ class Expectation
         {
             $this->binding->emmitAssertionFailure($message);
         }
+    }
+
+    /**
+     * Get human-readable object representation.
+     *
+     * @param $o
+     *
+     * @return string
+     */
+    protected function e($o)
+    {
+        return var_export($o, true);
+    }
+
+    /**
+     * Assert same as.
+     *
+     * @param mixed $o
+     *
+     * @return void
+     */
+    public function same_as($o)
+    {
+        $this->assert(
+            $this->s === $o,
+            "Expected {$this->e($this->s)} to be same as {$this->e($o)}.",
+            "Expected {$this->e($this->s)} to not be same as {$this->e($o)}."
+        );
     }
 }

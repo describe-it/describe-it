@@ -193,9 +193,33 @@ abstract class Formatter implements IFormatter
         $this->assertionsCount++;
         $this->failedAssertions++;
 
+        $stack = $this->stackTrace();
+
         $this->currentErrors[] = [
+            'line'    => $stack['line'],
+            'file'    => $stack['file'],
             'message' => $message,
         ];
+    }
+
+    private function stackTrace()
+    {
+        foreach (debug_backtrace() as $element)
+        {
+            if (isset($element['file']))
+            {
+                if (preg_match(
+                    '/^.+\.' . $this->options->get('suffix') . ".php$/",
+                    $element['file']
+                ))
+                {
+                    return $element;
+                }
+            }
+        }
+
+        $m = "Something went very wrong!";
+        throw new Exception($m);
     }
 
     protected function succeeded()

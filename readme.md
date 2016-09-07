@@ -4,9 +4,9 @@
 
 ### Purpose
 
-If you think that requiring about 20 megabytes of 
-PHPUnit into your small, few files, library is
-an overkill then describe-it may be your thing.
+If you think that requiring about 20 megabytes 
+of PHPUnit into your small, few files all-together, 
+library is an overkill then describe-it may be your thing.
 
 ### Features
 
