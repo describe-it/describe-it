@@ -19,13 +19,13 @@ class Binding implements IBinding
     }
 
     /** @inheritdoc */
-    public function emmitAssertionSuccess()
+    public function onAssertionSuccess()
     {
         $this->events->emmit(IEvents::ASSERTION_SUCCESS);
     }
 
     /** @inheritdoc */
-    public function emmitAssertionFailure($message)
+    public function onAssertionFailure($message)
     {
         $this->events->emmit(IEvents::ASSERTION_FAILURE, $message);
     }

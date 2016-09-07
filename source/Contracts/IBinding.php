@@ -7,7 +7,7 @@ interface IBinding
      *
      * @return void
      */
-    public function emmitAssertionSuccess();
+    public function onAssertionSuccess();
 
     /**
      * Emmit assertion failure event.
@@ -16,5 +16,5 @@ interface IBinding
      *
      * @return void
      */
-    public function emmitAssertionFailure($message);
+    public function onAssertionFailure($message);
 }

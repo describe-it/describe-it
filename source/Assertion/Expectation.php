@@ -67,11 +67,11 @@ class Expectation
 
         if ($result)
         {
-            $this->binding->emmitAssertionSuccess();
+            $this->binding->onAssertionSuccess();
         }
         else
         {
-            $this->binding->emmitAssertionFailure($message);
+            $this->binding->onAssertionFailure($message);
         }
     }
 
