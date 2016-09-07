@@ -2,7 +2,16 @@
 
 > Lightweight PHP testing framework with describe-it syntax.
 
+### Stability
+
+This project is still in it's infancy and 
+therefore is **not considered to be production ready**.
+
 ### Installation
+
+Describe-it utilizes [Composer](https://getcomposer.org) 
+to manage it's dependencies - make sure you have 
+Composer installed on your system.
 
 ```bash
 $ composer require --dev describe-it/describe-it
@@ -16,6 +25,8 @@ then it's possible that describe-it is your thing. It's super small
 and comes with just few even smaller dependencies.
 
 ### Example
+
+This an example test case using describe-it syntax.
 
 ```php
 describe('MyAwesomeClass', function() {

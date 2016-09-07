@@ -2,6 +2,7 @@
     "license": "MIT",
     "name": "describe-it/describe-it",
     "description": "Lightweight PHP testing framework with describe-it syntax.",
+    "type": "library",
     "keywords": [
         "super",
         "simple",
@@ -15,6 +16,9 @@
             "email": "lepczynski.s@outlook.com",
             "homepage": "https://github.com/lepczynski-s"
         }
+    ],
+    "bin": [
+        "source/describe-it"
     ],
     "config": {
         "bin-dir": "bin"
