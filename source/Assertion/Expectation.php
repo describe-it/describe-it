@@ -26,11 +26,21 @@ class Expectation
     }
 
     /**
+     * Negate statement.
+     *
+     * @return Expectation
+     */
+    public function not()
+    {
+        $this->negated = !$this->negated;
+
+        return $this;
+    }
+
+    /**
      * Assert equal to.
      *
      * @param mixed $o
-     *
-     * @return void
      */
     public function equal_to($o)
     {
@@ -78,11 +88,80 @@ class Expectation
     }
 
     /**
+     * Assert is empty.
+     */
+    public function is_empty()
+    {
+        $this->assert(
+            empty($this->s),
+            "Expected {$this->e($this->s)} to be empty.",
+            "Expected {$this->e($this->s)} to not be empty."
+        );
+    }
+
+    /**
+     * Assert regex match.
+     *
+     * @param string $r
+     */
+    public function match_a($r)
+    {
+        $this->assert(
+            preg_match($r, $this->s),
+            "Expected {$this->e($this->s)} to match {$r}.",
+            "Expected {$this->e($this->s)} to not match {$r}."
+        );
+    }
+
+    /**
+     * Assert smaller than.
+     *
+     * @param integer|float|double $n
+     */
+    public function smaller_than($n)
+    {
+        $this->assert(
+            $this->s < $n,
+            "Expected {$this->e($this->s)} to be smaller than {$this->e($n)}.",
+            "Expected {$this->e($this->s)} to not be smaller than {$this->e($n)}."
+        );
+    }
+
+    /**
+     * Assert bigger than.
+     *
+     * @param integer|float|double $n
+     */
+    public function bigger_than($n)
+    {
+        $this->assert(
+            $this->s > $n,
+            "Expected {$this->e($this->s)} to be bigger than {$this->e($n)}.",
+            "Expected {$this->e($this->s)} to not be bigger than {$this->e($n)}."
+        );
+    }
+
+    /**
+     * Assert within a range.
+     *
+     * @param integer|float|double $n1 from
+     * @param integer|float|double $n2 to
+     */
+    public function within_a_range($n1, $n2)
+    {
+        $r = "{$n1}...{$n2}";
+
+        $this->assert(
+            $this->s >= $n1 && $this->s <= $n2,
+            "Expected {$this->e($this->s)} to be in {$r} range.",
+            "Expected {$this->e($this->s)} to not be in {$r} range."
+        );
+    }
+
+    /**
      * Assert same as.
      *
      * @param mixed $o
-     *
-     * @return void
      */
     public function same_as($o)
     {

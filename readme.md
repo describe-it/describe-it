@@ -1,6 +1,6 @@
 # Describe-it
 
-> Super simple PHP testing framework using describe-it syntax.
+> Lightweight PHP testing framework with describe-it syntax.
 
 ### Installation
 
@@ -13,7 +13,7 @@ $ composer require --dev describe-it/describe-it
 If you feel like your library is just too small to justify
 incorporating a full-blown testing framework like PHPUnit or PHPSpec
 then it's possible that describe-it is your thing. It's super small
-and comes with just few dependencies.
+and comes with just few even smaller dependencies.
 
 ### Example
 
@@ -65,6 +65,7 @@ You can configure describe-it using a `describe-it.json` file.
 ### Roadmap
 
 * refactoring (formatter & runner classes are a bit chaotic)
+* extract expectations to different package
 * dot formatter
 * tests & documentation
 * custom bootstrap file

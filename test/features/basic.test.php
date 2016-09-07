@@ -14,7 +14,7 @@ describe("MyClass", function ()
         it('Should not pass', function ()
         {
             expect(true)->equal_to(true);
-            expect(true)->equal_to(false);
+            expect(true)->not()->equal_to(true);
             expect('a')->same_as('b');
         });
     });

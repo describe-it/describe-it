@@ -1,7 +1,7 @@
 {
     "license": "MIT",
     "name": "describe-it/describe-it",
-    "description": "Super simple PHP testing framework using describe-it syntax.",
+    "description": "Lightweight PHP testing framework with describe-it syntax.",
     "keywords": [
         "super",
         "simple",
