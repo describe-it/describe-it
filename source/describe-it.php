@@ -42,12 +42,14 @@ $options = new Options(getcwd(), $parameters->get('options'), [
     ],
 ]);
 
+// TODO: Overriding options from parameters.
+
 /* ---------------------------------- */
 // Creating formatter
 /* ---------------------------------- */
 
 /** @var IFormatter $formatter */
-$formatter = new ListFormatter($events, $parameters, $options);
+$formatter = new ListFormatter($events, $options);
 $formatter->bind();
 
 /* ---------------------------------- */
@@ -55,6 +57,6 @@ $formatter->bind();
 /* ---------------------------------- */
 
 /** @var IRunner $runner */
-$runner = new TestRunner($events, $parameters, $options);
+$runner = new TestRunner($events, $options);
 $runner->bind();
 $runner->run();

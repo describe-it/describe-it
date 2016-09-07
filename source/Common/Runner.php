@@ -2,7 +2,6 @@
 
 use Describe\Contracts\IEvents;
 use Describe\Contracts\IOptions;
-use Describe\Contracts\IParameters;
 use Describe\Contracts\IRunner;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -12,23 +11,18 @@ abstract class Runner implements IRunner
     /** @var  IEvents */
     protected $events;
 
-    /** @var IParameters */
-    protected $parameters;
-
     /** @var IOptions */
     protected $options;
 
     /**
      * Runner constructor.
      *
-     * @param IEvents     $events
-     * @param IParameters $parameters
-     * @param IOptions    $options
+     * @param IEvents  $events
+     * @param IOptions $options
      */
-    public function __construct(IEvents $events, IParameters $parameters, IOptions $options)
+    public function __construct(IEvents $events, IOptions $options)
     {
         $this->events = $events;
-        $this->parameters = $parameters;
         $this->options = $options;
     }
 

@@ -3,6 +3,10 @@
         {
             "name": "Features",
             "directory": "test/features"
+        },
+        {
+            "name": "Issues",
+            "directory": "test/issues"
         }
     ]
 }

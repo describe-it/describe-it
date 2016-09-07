@@ -22,8 +22,11 @@ class Events implements IEvents
     }
 
     /** @inheritdoc */
-    public function emmit($name, $argument)
+    public function emmit($name, $argument = null)
     {
-        $this->emitter->emit($name, [$argument]);
+        $this->emitter->emit(
+            $name,
+            $argument ? [$argument] : []
+        );
     }
 }

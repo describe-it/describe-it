@@ -10,7 +10,8 @@ class TestRunner extends Runner
     {
         foreach ($this->options->get('suites') as $suite)
         {
-            $this->events->emmit(IEvents::SUITE, $suite['name']);
+            // Fire current suite changed event
+            $this->events->emmit(IEvents::SUITE_CHANGED, $suite['name']);
 
             $files = $this->files(
                 "{$this->options->get('cwd')}/{$suite['directory']}/",

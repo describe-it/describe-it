@@ -19,12 +19,12 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "files": [
-            "global/functions.php"
-        ],
         "psr-4": {
             "Describe\\": "source/"
-        }
+        },
+        "files": [
+            "source/Global/syntax.php"
+        ]
     },
     "require": {
         "evenement/evenement": "^2.0"

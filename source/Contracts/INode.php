@@ -2,6 +2,9 @@
 
 interface INode
 {
+    const OPENING = 'placement.opening';
+    const CLOSING = 'placement.closing';
+
     /**
      * Get node type.
      *

@@ -2,7 +2,9 @@
 
 interface IEvents
 {
-    const SUITE = 'event.suite';
+    const SUITE_CHANGED = 'event.suite';
+    const ASSERTION_SUCCESS = 'event.assertion_success';
+    const ASSERTION_FAILURE = 'event.assertion_failure';
 
     /**
      * Register event handler.
@@ -22,5 +24,5 @@ interface IEvents
      *
      * @return void
      */
-    public function emmit($name, $argument);
+    public function emmit($name, $argument = null);
 }

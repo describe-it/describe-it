@@ -1,118 +1,58 @@
 <?php namespace Describe\Formatter;
 
 use Describe\Common\Formatter;
-use Describe\Contracts\IEvents;
 use Describe\Contracts\INode;
-use Describe\Contracts\ISyntax;
-use Exception;
 
 class ListFormatter extends Formatter
 {
-    /** @var INode */
-    protected $currentNode;
-
     /** @var integer */
-    protected $failedExpectations = 0;
-
-    /** @var integer */
-    protected $indentation = 0;
+    protected $currentIndentation = 0;
 
     /** @inheritdoc */
-    public function bind()
+    protected function openDescribe(INode $node)
     {
-        $this->events->register(IEvents::SUITE, [$this, 'heading']);
-        $this->events->register(ISyntax::DESCRIBE, [$this, 'process']);
-        $this->events->register(ISyntax::CONTEXT, [$this, 'process']);
-        $this->events->register(ISyntax::IT, [$this, 'process']);
-    }
-
-    public function process(INode $node)
-    {
-        switch ($node->placement())
-        {
-            case ISyntax::OPENING:
-                $this->start($node);
-                break;
-
-            case ISyntax::CLOSING:
-                $this->end($node);
-                break;
-
-            default:
-                $message = "{$node->placement()} syntax node placement is not defined.";
-                throw new Exception($message);
-        }
-    }
-
-    protected function start(INode $node)
-    {
-        switch ($node->type())
-        {
-            case ISyntax::DESCRIBE:
-                $this->output($node);
-                break;
-
-            case ISyntax::CONTEXT:
-                $this->open();
-                $this->output($node);
-                break;
-
-            case ISyntax::IT:
-                $this->open();
-                $this->currentNode = $node;
-                break;
-
-            default:
-                $message = "{$node->type()} syntax node type is not defined.";
-                throw new Exception($message);
-        }
-    }
-
-    protected function output(INode $node)
-    {
-        echo "{$this->tabs()}{$node->message()}\n";
+        $this->output("{$this->tabs()}{$node->message()}");
     }
 
     protected function tabs()
     {
-        return str_repeat(" ", $this->indentation * 4);
+        return str_repeat(" ", $this->currentIndentation * 4);
     }
 
-    protected function open($count = 1)
+    /** @inheritdoc */
+    protected function closeDescribe(INode $node)
     {
-        $this->indentation += $count;
+        $this->output("");
     }
 
-    protected function end(INode $node)
+    /** @inheritdoc */
+    protected function openContext(INode $node)
     {
-        switch ($node->type())
-        {
-            case ISyntax::DESCRIBE:
-                break;
-
-            case ISyntax::CONTEXT:
-                $this->close();
-                break;
-
-            case ISyntax::IT:
-                $this->output($this->currentNode);
-                $this->close();
-                break;
-
-            default:
-                $message = "{$node->type()} syntax node type is not defined.";
-                throw new Exception($message);
-        }
+        $this->currentIndentation++;
+        $this->output("");
+        $this->output("{$this->tabs()}{$node->message()}");
     }
 
-    protected function close($count = 1)
+    /** @inheritdoc */
+    protected function closeContext(INode $node)
     {
-        $this->indentation -= $count;
+        $this->currentIndentation--;
+    }
 
-        if ($this->indentation < 0)
-        {
-            $message = "Indentation cannot be smaller than zero.";
-            throw new Exception($message);
-        }
+    /** @inheritdoc */
+    protected function openIt(INode $node)
+    {
+        $this->currentIndentation++;
+    }
+
+    /** @inheritdoc */
+    protected function closeIt(INode $node)
+    {
+        $color = $this->succeeded() ? self::GREEN : self::RED;
+        $icon = $this->succeeded() ? '*' : 'x';
+        $count = "({$this->succeededAssertions}/{$this->assertionsCount})";
+
+        $this->output("{$this->tabs()}{$icon} {$node->message()} {$count}", $color);
+        $this->currentIndentation--;
     }
 }

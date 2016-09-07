@@ -1,15 +1,26 @@
 <?php
 
+use Describe\Assertion\Binding;
+use Describe\Assertion\Expectation;
 use Describe\Common\Node;
+use Describe\Contracts\INode;
 use Describe\Contracts\ISyntax;
 
+/**
+ * Describe some component.
+ *
+ * @param string  $message
+ * @param Closure $closure
+ *
+ * @return void
+ */
 function describe($message, Closure $closure)
 {
     global $events;
 
     $events->emmit(ISyntax::DESCRIBE, new Node(
         ISyntax::DESCRIBE,
-        ISyntax::OPENING,
+        INode::OPENING,
         $message
     ));
 
@@ -17,17 +28,25 @@ function describe($message, Closure $closure)
 
     $events->emmit(ISyntax::DESCRIBE, new Node(
         ISyntax::DESCRIBE,
-        ISyntax::CLOSING
+        INode::CLOSING
     ));
 }
 
+/**
+ * Create new context.
+ *
+ * @param string  $message
+ * @param Closure $closure
+ *
+ * @return void
+ */
 function context($message, Closure $closure)
 {
     global $events;
 
     $events->emmit(ISyntax::CONTEXT, new Node(
         ISyntax::CONTEXT,
-        ISyntax::OPENING,
+        INode::OPENING,
         $message
     ));
 
@@ -35,17 +54,25 @@ function context($message, Closure $closure)
 
     $events->emmit(ISyntax::CONTEXT, new Node(
         ISyntax::CONTEXT,
-        ISyntax::CLOSING
+        INode::CLOSING
     ));
 }
 
+/**
+ * Create test case.
+ *
+ * @param string  $message
+ * @param Closure $closure
+ *
+ * @return void
+ */
 function it($message, Closure $closure)
 {
     global $events;
 
     $events->emmit(ISyntax::IT, new Node(
         ISyntax::IT,
-        ISyntax::OPENING,
+        INode::OPENING,
         $message
     ));
 
@@ -53,6 +80,23 @@ function it($message, Closure $closure)
 
     $events->emmit(ISyntax::IT, new Node(
         ISyntax::IT,
-        ISyntax::CLOSING
+        INode::CLOSING
     ));
+}
+
+/**
+ * Create new expectation.
+ *
+ * @param $subject
+ *
+ * @return Expectation
+ */
+function expect($subject)
+{
+    global $events;
+
+    return new Expectation(
+        $subject,
+        new Binding($events)
+    );
 }

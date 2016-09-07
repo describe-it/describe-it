@@ -35,8 +35,7 @@ class Options implements IOptions
         }
         else
         {
-            $message = "{$this->path} options file could not be found.";
-            throw new Exception($message);
+            echo "Configuration file not found - using defaults.\n";
         }
     }
 
