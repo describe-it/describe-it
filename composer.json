@@ -1,7 +1,7 @@
 {
     "license": "MIT",
     "name": "lepczynski-s/describe-it",
-    "description": "Super simple describe-it syntax testing framework for PHP.",
+    "description": "Super simple PHP testing framework using describe-it syntax.",
     "keywords": [
         "super",
         "simple",
@@ -19,11 +19,14 @@
         "bin-dir": "bin"
     },
     "autoload": {
+        "files": [
+            "global/functions.php"
+        ],
         "psr-4": {
-            "": "source/"
+            "Describe\\": "source/"
         }
     },
     "require": {
-        "php": ">=5.6.0"
+        "evenement/evenement": "^2.0"
     }
 }

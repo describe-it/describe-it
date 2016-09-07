@@ -1,0 +1,8 @@
+{
+    "suites": [
+        {
+            "name": "Features",
+            "directory": "test/features"
+        }
+    ]
+}

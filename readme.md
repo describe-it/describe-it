@@ -1,6 +1,6 @@
 # Describe-it
 
-> Super simple describe-it syntax testing framework for PHP.
+> Super simple PHP testing framework using describe-it syntax.
 
 Describe-it is a super lightweight test runner with a describe-it syntax.
 
