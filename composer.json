@@ -12,7 +12,8 @@
     "authors": [
         {
             "name": "Sebastian Łepczyński",
-            "email": "lepczynski.s@outlook.com"
+            "email": "lepczynski.s@outlook.com",
+            "homepage": "https://github.com/lepczynski-s"
         }
     ],
     "config": {

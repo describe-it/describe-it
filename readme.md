@@ -2,11 +2,36 @@
 
 > Super simple PHP testing framework using describe-it syntax.
 
+### Installation
+
+```bash
+$ composer require --dev describe-it/describe-it
+```
+
 ### Purpose
 
-If you think that requiring about 20 megabytes 
-of PHPUnit into your small, few files all-together, 
-library is an overkill then describe-it may be your thing.
+If you feel like your library is just too small to justify
+incorporating a full-blown testing framework like PHPUnit or PHPSpec
+then it's possible that describe-it is your thing. It's super small
+and comes with just few dependencies.
+
+### Example
+
+```php
+describe('MyAwesomeClass', function() {
+    context('Some of its features', function() {
+    
+        it('Should pass', function() {
+            expect(10).equal_to(10.0);
+        });
+        
+        it('But this should not', function() {
+            expect(10).same_as(10.0);
+        });
+        
+    });
+});
+```
 
 ### Features
 
@@ -15,12 +40,6 @@ library is an overkill then describe-it may be your thing.
 * expect assertions
 * two formatters: dot & list
 * optional json configuration file
-
-### Installation
-
-```bash
-$ composer require --dev describe-it/describe-it
-```
 
 ### Configuration
 
@@ -46,6 +65,7 @@ You can configure describe-it using a `describe-it.json` file.
 ### Roadmap
 
 * refactoring (formatter & runner classes are a bit chaotic)
+* dot formatter
 * tests & documentation
 * custom bootstrap file
 * interactive mode using `--watch`
