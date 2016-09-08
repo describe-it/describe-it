@@ -1,10 +1,10 @@
 <?php
 
-use Describe\Assertion\Binding;
-use Describe\Assertion\Expectation;
+use Describe\Common\Binding;
 use Describe\Common\Node;
 use Describe\Contracts\INode;
 use Describe\Contracts\ISyntax;
+use Expective\Expectation;
 
 /**
  * Describe some component.
@@ -87,7 +87,7 @@ function it($message, Closure $closure)
 /**
  * Create new expectation.
  *
- * @param $subject
+ * @param mixed $subject
  *
  * @return Expectation
  */

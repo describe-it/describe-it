@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a9a60831d5363c70bd960f58f04a282d",
-    "content-hash": "ccfb31ee2eea13163904c12488922ec0",
+    "hash": "f96ad5976397cea3bceabb0eb723b434",
+    "content-hash": "144f45b1ea9103f57ac49a53c5c282b6",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -52,6 +52,46 @@
                 "event-emitter"
             ],
             "time": "2012-11-02 14:49:47"
+        },
+        {
+            "name": "lepczynski-s/expective",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lepczynski-s/expective.git",
+                "reference": "4b04364d76a3df20815913d7becfdd81d92ef49d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lepczynski-s/expective/zipball/4b04364d76a3df20815913d7becfdd81d92ef49d",
+                "reference": "4b04364d76a3df20815913d7becfdd81d92ef49d",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Expective\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Łepczyński",
+                    "email": "lepczynski.s@outlook.com",
+                    "homepage": "https://github.com/lepczynski-s"
+                }
+            ],
+            "description": "Framework-agnostic expectations library.",
+            "keywords": [
+                "agnostic",
+                "assertion",
+                "framework",
+                "library"
+            ],
+            "time": "2016-09-08 18:01:45"
         }
     ],
     "packages-dev": [],
