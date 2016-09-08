@@ -14,15 +14,16 @@ to manage it's dependencies - make sure you have
 Composer installed on your system.
 
 ```bash
-$ composer require --dev describe-it/describe-it
+$ composer require --dev lepczynski-s/describe-it
 ```
 
-### Purpose
+### Features
 
-If you feel like your library is just too small to justify
-incorporating a full-blown testing framework like PHPUnit or PHPSpec
-then it's possible that describe-it is your thing. It's super small
-and comes with just few even smaller dependencies.
+* command-line test-runner
+* test suites support
+* expect assertions
+* two formatters: dot & list
+* optional json configuration file
 
 ### Example
 
@@ -43,14 +44,6 @@ describe('MyAwesomeClass', function() {
     });
 });
 ```
-
-### Features
-
-* command-line test-runner
-* test suites support
-* expect assertions
-* two formatters: dot & list
-* optional json configuration file
 
 ### Configuration
 

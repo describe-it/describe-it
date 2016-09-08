@@ -1,6 +1,6 @@
 {
     "license": "MIT",
-    "name": "describe-it/describe-it",
+    "name": "lepczynski-s/describe-it",
     "description": "Lightweight PHP testing framework with describe-it syntax.",
     "type": "library",
     "keywords": [
