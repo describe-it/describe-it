@@ -11,18 +11,14 @@ interface IEvents
      *
      * @param string   $name
      * @param callable $handler
-     *
-     * @return void
      */
     public function register($name, $handler);
 
     /**
-     * Emmit an event.
+     * Emmit new event.
      *
      * @param string $name
      * @param mixed  $argument
-     *
-     * @return void
      */
     public function emmit($name, $argument = null);
 }

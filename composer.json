@@ -28,7 +28,7 @@
             "Describe\\": "source/"
         },
         "files": [
-            "source/Global/syntax.php"
+            "source/syntax.php"
         ]
     },
     "require": {

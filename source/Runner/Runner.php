@@ -1,4 +1,4 @@
-<?php namespace Describe\Common;
+<?php namespace Describe\Runner;
 
 use Describe\Contracts\IEvents;
 use Describe\Contracts\IOptions;
@@ -27,15 +27,41 @@ abstract class Runner implements IRunner
     }
 
     /** @inheritdoc */
-    public abstract function run();
+    public function execute($suiteName = null)
+    {
+        foreach ($this->options->get('suites') as $suite)
+        {
+            if (empty($suiteName) || $suiteName == $suite['name'])
+            {
+                $this->executeSuite($suite);
+            }
+        }
+    }
+
+    /**
+     * Execute test cases from suite.
+     *
+     * @param array $suite
+     */
+    protected abstract function executeSuite(array $suite);
 
     /** @inheritdoc */
     public abstract function bind();
 
-    protected function files($folder, $pattern)
+    /**
+     * Get test files for suite.
+     *
+     * @param array $suite
+     *
+     * @return array
+     */
+    protected function files(array $suite)
     {
+        $directory = "{$this->options->get('cwd')}/{$suite['directory']}/";
+        $pattern = ".{$this->options->get('suffix')}.php";
+
         $files = [];
-        $iterator = new RecursiveDirectoryIterator($folder);
+        $iterator = new RecursiveDirectoryIterator($directory);
 
         foreach (new RecursiveIteratorIterator($iterator) as $file)
         {

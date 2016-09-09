@@ -5,14 +5,12 @@ interface IRunner
     /**
      * Execute tests.
      *
-     * @return void
+     * @param string $suiteName
      */
-    public function run();
+    public function execute($suiteName = null);
 
     /**
      * Bind event listeners.
-     *
-     * @return void
      */
     public function bind();
 }

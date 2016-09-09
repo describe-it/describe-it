@@ -95,8 +95,5 @@ function expect($subject)
 {
     global $events;
 
-    return new Expectation(
-        $subject,
-        new Binding($events)
-    );
+    return new Expectation($subject, new Binding($events));
 }

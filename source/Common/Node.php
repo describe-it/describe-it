@@ -1,20 +1,16 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lepcz
- * Date: 07.09.2016
- * Time: 16:49
- */
-
-namespace Describe\Common;
-
+<?php namespace Describe\Common;
 
 use Describe\Contracts\INode;
 
 class Node implements INode
 {
+    /** @var string */
     protected $type;
+
+    /** @var string */
     protected $mode;
+
+    /** @var string */
     protected $message;
 
     /**

@@ -59,4 +59,4 @@ $formatter->bind();
 /** @var IRunner $runner */
 $runner = new TestRunner($events, $options);
 $runner->bind();
-$runner->run();
+$runner->execute();
