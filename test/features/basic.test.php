@@ -15,6 +15,11 @@ describe("MyClass", function ()
             expect(true)->to_be_not->equal_to(false);
             expect(false)->to_be->same_as(true);
         });
+
+        it('And this should pass too!', function ()
+        {
+            expect(10)->to_be->equal_to(10.0);
+        });
     });
 });
 

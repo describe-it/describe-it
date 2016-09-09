@@ -12,16 +12,21 @@ use Describe\Contracts\IFiles;
 use Describe\Contracts\IOptions;
 use Describe\Contracts\IParameters;
 use Describe\Contracts\IRunner;
+use Describe\Contracts\IStackTracer;
 use Describe\Runner\TestFiles;
 use Describe\Runner\TestRunner;
 use Describe\Runner\TestSuite;
+use Describe\Utils\StackTracer;
 
 /* ---------------------------------- */
-// Creating event emitter
+// Creating helpers
 /* ---------------------------------- */
 
 /** @var IEvents $events */
 $events = new Events();
+
+/** @var IStackTracer $tracer */
+$tracer = new StackTracer();
 
 /* ---------------------------------- */
 // Preparing environment
@@ -81,7 +86,13 @@ foreach ($options->get('suites') as $suite)
         || strtolower($parameters->get('suite')) == strtolower($suite['name'])
     )
     {
-        $runner->schedule(new TestSuite($events, $files, $outputs, $suite));
+        $runner->schedule(new TestSuite(
+            $events,
+            $files,
+            $outputs,
+            $tracer,
+            $suite
+        ));
     }
 }
 

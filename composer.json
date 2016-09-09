@@ -4,9 +4,10 @@
     "description": "Lightweight PHP testing framework with describe-it syntax.",
     "type": "library",
     "keywords": [
-        "super",
-        "simple",
         "describe-it",
+        "lightweight",
+        "tdd",
+        "bdd",
         "testing",
         "framework"
     ],

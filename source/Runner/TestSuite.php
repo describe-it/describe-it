@@ -4,6 +4,7 @@ use Describe\Common\Initializable;
 use Describe\Contracts\DescribeException;
 use Describe\Contracts\IEvents;
 use Describe\Contracts\IFiles;
+use Describe\Contracts\IStackTracer;
 use Describe\Contracts\ISuite;
 use Describe\Contracts\ISyntax;
 use Describe\Contracts\IWriter;
@@ -23,6 +24,9 @@ class TestSuite extends Initializable implements ISuite
     /** @var IWriter */
     protected $writer;
 
+    /** @var IStackTracer */
+    protected $tracer;
+
     /** @var string */
     protected $name;
 
@@ -35,10 +39,11 @@ class TestSuite extends Initializable implements ISuite
     /**
      * TestSuite constructor.
      *
-     * @param IEvents $events
-     * @param IFiles  $reader
-     * @param IWriter $writer
-     * @param array   $options
+     * @param IEvents      $events
+     * @param IFiles       $reader
+     * @param IWriter      $writer
+     * @param IStackTracer $tracer
+     * @param array        $options
      *
      * @throws DescribeException
      */
@@ -46,6 +51,7 @@ class TestSuite extends Initializable implements ISuite
         IEvents $events,
         IFiles $reader,
         IWriter $writer,
+        IStackTracer $tracer,
         array $options
     )
     {
@@ -53,13 +59,14 @@ class TestSuite extends Initializable implements ISuite
         $this->events = $events;
         $this->reader = $reader;
         $this->writer = $writer;
+        $this->tracer = $tracer;
     }
 
     /** @inheritdoc */
     public function execute()
     {
         $this->bind();
-        $this->writer->suiteStart($this->name);
+        $this->writer->openSuite($this->name);
         $files = $this->reader->find($this->directory, $this->suffix);
 
         if (!count($files))
@@ -72,7 +79,7 @@ class TestSuite extends Initializable implements ISuite
             $this->reader->execute($file);
         }
 
-        $this->writer->suiteEnd($this->name);
+        $this->writer->closeSuite($this->name);
         $this->unbind();
     }
 
@@ -109,27 +116,27 @@ class TestSuite extends Initializable implements ISuite
         switch ($statement)
         {
             case ISyntax::DESCRIBE_START:
-                $this->writer->describeStart($message);
+                $this->writer->openDescribe($message);
                 break;
 
             case ISyntax::DESCRIBE_END:
-                $this->writer->describeEnd($message);
+                $this->writer->closeDescribe($message);
                 break;
 
             case ISyntax::CONTEXT_START:
-                $this->writer->contextStart($message);
+                $this->writer->openContext($message);
                 break;
 
             case ISyntax::CONTEXT_END:
-                $this->writer->contextEnd($message);
+                $this->writer->closeContext($message);
                 break;
 
             case ISyntax::IT_START:
-                $this->writer->itStart($message);
+                $this->writer->openIt($message);
                 break;
 
             case ISyntax::IT_END:
-                $this->writer->itEnd($message);
+                $this->writer->closeIt($message);
                 break;
         }
     }
@@ -139,7 +146,7 @@ class TestSuite extends Initializable implements ISuite
      */
     public function before()
     {
-        $this->writer->onBefore();
+        $this->writer->outputBefore();
     }
 
     /**
@@ -147,7 +154,9 @@ class TestSuite extends Initializable implements ISuite
      */
     public function success()
     {
-        $this->writer->onSuccess();
+        $this->writer->outputSuccess(
+            $this->tracer->trace($this->suffix)
+        );
     }
 
     /**
@@ -157,6 +166,8 @@ class TestSuite extends Initializable implements ISuite
      */
     public function failure($message)
     {
-        $this->writer->onFailure($message);
+        $this->writer->outputFailure(
+            $this->tracer->trace($this->suffix, ['message' => $message])
+        );
     }
 }

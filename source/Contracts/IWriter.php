@@ -11,71 +11,73 @@ interface IWriter
      *
      * @param string $name
      */
-    public function suiteStart($name);
+    public function openSuite($name);
 
     /**
      * Output suite closing.
      *
      * @param string $name
      */
-    public function suiteEnd($name);
+    public function closeSuite($name);
 
     /**
      * Output describe opening.
      *
      * @param string $message
      */
-    public function describeStart($message);
+    public function openDescribe($message);
 
     /**
      * Output describe closing.
      *
      * @param string $message
      */
-    public function describeEnd($message);
+    public function closeDescribe($message);
 
     /**
      * Output context opening.
      *
      * @param string $message
      */
-    public function contextStart($message);
+    public function openContext($message);
 
     /**
      * Output context closing.
      *
      * @param string $message
      */
-    public function contextEnd($message);
+    public function closeContext($message);
 
     /**
      * Output it opening.
      *
      * @param string $message
      */
-    public function itStart($message);
+    public function openIt($message);
 
     /**
      * Output it closing.
      *
      * @param string $message
      */
-    public function itEnd($message);
+    public function closeIt($message);
 
     /**
      * Output before assertion.
      */
-    public function onBefore();
+    public function outputBefore();
 
     /**
      * Output assertion success.
+     *
+     * @param array $success success details
      */
-    public function onSuccess();
+    public function outputSuccess(array $success);
 
     /**
      * Output assertion failure.
      *
-     * @param string $message
+     * @param array $error failure details
      */
-    public function onFailure($message);
+    public function outputFailure(array $error);
 }

@@ -21,122 +21,122 @@ class Outputs implements IWriter
     /**
      * Create new output.
      *
-     * @param array $output
+     * @param array $options
      *
      * @throws DescribeException
      */
-    public function create(array $output)
+    public function create(array $options)
     {
-        $class = self::FO_NS . ucfirst($output['type']) . 'Formatter';
+        $class = self::FO_NS . ucfirst($options['type']) . 'Output';
 
         if (
             !class_exists($class)
             || !in_array(self::WR_IN, class_implements($class))
         )
         {
-            $message = "{$output['type']} output format is not supported.";
+            $message = "{$options['type']} output format is not supported.";
             throw new DescribeException($message);
         }
 
-        $this->outputs[] = new $class($output);
+        $this->outputs[] = new $class($options);
     }
 
     /** @inheritdoc */
-    public function suiteStart($name)
+    public function closeContext($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->suiteStart($name);
+            $output->closeContext($message);
         }
     }
 
     /** @inheritdoc */
-    public function suiteEnd($message)
+    public function closeDescribe($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->suiteEnd($message);
+            $output->closeDescribe($message);
         }
     }
 
     /** @inheritdoc */
-    public function describeStart($message)
+    public function closeIt($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->describeStart($message);
+            $output->closeIt($message);
         }
     }
 
     /** @inheritdoc */
-    public function describeEnd($message)
+    public function closeSuite($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->describeEnd($message);
+            $output->closeSuite($message);
         }
     }
 
     /** @inheritdoc */
-    public function contextStart($message)
+    public function openContext($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->contextStart($message);
+            $output->openContext($message);
         }
     }
 
     /** @inheritdoc */
-    public function contextEnd($message)
+    public function openDescribe($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->contextEnd($message);
+            $output->openDescribe($message);
         }
     }
 
     /** @inheritdoc */
-    public function itStart($message)
+    public function openIt($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->itStart($message);
+            $output->openIt($message);
         }
     }
 
     /** @inheritdoc */
-    public function itEnd($message)
+    public function openSuite($name)
     {
         foreach ($this->outputs as $output)
         {
-            $output->itEnd($message);
+            $output->openSuite($name);
         }
     }
 
     /** @inheritdoc */
-    public function onBefore()
+    public function outputBefore()
     {
         foreach ($this->outputs as $output)
         {
-            $output->onBefore();
+            $output->outputBefore();
         }
     }
 
     /** @inheritdoc */
-    public function onSuccess()
+    public function outputFailure(array $error)
     {
         foreach ($this->outputs as $output)
         {
-            $output->onSuccess();
+            $output->outputFailure($error);
         }
     }
 
     /** @inheritdoc */
-    public function onFailure($message)
+    public function outputSuccess(array $success)
     {
         foreach ($this->outputs as $output)
         {
-            $output->onFailure($message);
+            $output->outputSuccess($success);
         }
     }
 }

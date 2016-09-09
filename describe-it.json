@@ -1,7 +1,10 @@
 {
     "formatter": {
         "type": "list",
-        "indent": 4
+        "indent": 4,
+        "passed": true,
+        "success": "+",
+        "failure": "-"
     },
     "outputs": [
     ],
