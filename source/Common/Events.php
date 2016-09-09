@@ -3,6 +3,10 @@
 use Describe\Contracts\IEvents;
 use Evenement\EventEmitter;
 
+/**
+ * Class Events
+ * @package Describe\Common
+ */
 class Events implements IEvents
 {
     protected $emitter;
@@ -22,11 +26,14 @@ class Events implements IEvents
     }
 
     /** @inheritdoc */
-    public function emmit($name, $argument = null)
+    public function remove($name, $handler)
     {
-        $this->emitter->emit(
-            $name,
-            $argument ? [$argument] : []
-        );
+        $this->emitter->removeListener($name, $handler);
+    }
+
+    /** @inheritdoc */
+    public function emmit($name, $arguments = [])
+    {
+        $this->emitter->emit($name, $arguments);
     }
 }

@@ -42,101 +42,101 @@ class Outputs implements IWriter
     }
 
     /** @inheritdoc */
-    public function startSUITE($name)
+    public function suiteStart($name)
     {
         foreach ($this->outputs as $output)
         {
-            $output->startSUITE($name);
+            $output->suiteStart($name);
         }
     }
 
     /** @inheritdoc */
-    public function endSUITE()
+    public function suiteEnd($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->endSUITE();
+            $output->suiteEnd($message);
         }
     }
 
     /** @inheritdoc */
-    public function startDESCRIBE($message)
+    public function describeStart($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->startDESCRIBE($message);
+            $output->describeStart($message);
         }
     }
 
     /** @inheritdoc */
-    public function endDESCRIBE()
+    public function describeEnd($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->endDESCRIBE();
+            $output->describeEnd($message);
         }
     }
 
     /** @inheritdoc */
-    public function startCONTEXT($message)
+    public function contextStart($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->startCONTEXT($message);
+            $output->contextStart($message);
         }
     }
 
     /** @inheritdoc */
-    public function endCONTEXT()
+    public function contextEnd($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->endCONTEXT();
+            $output->contextEnd($message);
         }
     }
 
     /** @inheritdoc */
-    public function startIT()
+    public function itStart($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->startIT();
+            $output->itStart($message);
         }
     }
 
     /** @inheritdoc */
-    public function contentIT($message)
+    public function itEnd($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->contentIT($message);
+            $output->itEnd($message);
         }
     }
 
     /** @inheritdoc */
-    public function endIT()
+    public function onBefore()
     {
         foreach ($this->outputs as $output)
         {
-            $output->endIT();
+            $output->onBefore();
         }
     }
 
     /** @inheritdoc */
-    public function contentSUCCESS()
+    public function onSuccess()
     {
         foreach ($this->outputs as $output)
         {
-            $output->contentSUCCESS();
+            $output->onSuccess();
         }
     }
 
     /** @inheritdoc */
-    public function contentFAILURE($message)
+    public function onFailure($message)
     {
         foreach ($this->outputs as $output)
         {
-            $output->contentFAILURE($message);
+            $output->onFailure($message);
         }
     }
 }

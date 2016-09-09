@@ -3,6 +3,10 @@
 use Describe\Contracts\IEvents;
 use Expective\Contracts\IBinding;
 
+/**
+ * Class Binding
+ * @package Describe\Common
+ */
 class Binding implements IBinding
 {
     /** @var IEvents */
@@ -21,17 +25,18 @@ class Binding implements IBinding
     /** @inheritdoc */
     public function onBeforeAssertion()
     {
+        $this->events->emmit(IEvents::BEFORE);
     }
 
     /** @inheritdoc */
     public function onAssertionSuccess()
     {
-        $this->events->emmit(IEvents::ASSERTION_SUCCESS);
+        $this->events->emmit(IEvents::SUCCESS);
     }
 
     /** @inheritdoc */
     public function onAssertionFailure($message)
     {
-        $this->events->emmit(IEvents::ASSERTION_FAILURE, $message);
+        $this->events->emmit(IEvents::FAILURE, [$message]);
     }
 }

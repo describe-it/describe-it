@@ -15,14 +15,26 @@ class ListFormatter extends Initializable implements IWriter
     const GREEN = 'green';
     const RED = 'red';
 
+    /** @var IErrorFactory */
+    protected $errorFactory;
+
     /** @var integer */
     protected $indentation = 0;
 
     /** @var integer */
     protected $indent = 4;
 
-    /** @var IErrorFactory */
-    protected $errorFactory;
+    /** @var integer */
+    protected $assertionsCount = 0;
+
+    /** @var integer */
+    protected $assertionsSucceeded = 0;
+
+    /** @var string */
+    protected $currentStatement;
+
+    /** @var array */
+    protected $currentErrors = [];
 
     /**
      * ListFormatter constructor.
@@ -42,10 +54,81 @@ class ListFormatter extends Initializable implements IWriter
     }
 
     /** @inheritdoc */
-    public function startSUITE($name)
+    public function contextEnd($message)
+    {
+        $this->indentation--;
+    }
+
+    /** @inheritdoc */
+    public function contextStart($message)
+    {
+        $this->output($message);
+        $this->indentation++;
+    }
+
+    /** @inheritdoc */
+    public function describeEnd($message)
+    {
+        $this->indentation--;
+    }
+
+    /** @inheritdoc */
+    public function describeStart($message)
+    {
+        $this->output($message);
+        $this->indentation++;
+    }
+
+    /** @inheritdoc */
+    public function itEnd($message)
+    {
+        $status = ($this->assertionsCount == $this->assertionsSucceeded);
+
+        $icon = $status ? '*' : 'x';
+        $color = $status ? self::GREEN : self::RED;
+        $counter = "({$this->assertionsSucceeded}/{$this->assertionsCount})";
+
+        $this->output("{$icon} {$message} {$counter}", $color);
+        $this->reset();
+    }
+
+    /** @inheritdoc */
+    public function itStart($message)
+    {
+        $this->reset();
+    }
+
+    /** @inheritdoc */
+    public function onBefore()
+    {
+        //
+    }
+
+    /** @inheritdoc */
+    public function onFailure($message)
+    {
+        $this->assertionsCount++;
+    }
+
+    /** @inheritdoc */
+    public function onSuccess()
+    {
+        $this->assertionsCount++;
+        $this->assertionsSucceeded++;
+    }
+
+    /** @inheritdoc */
+    public function suiteEnd($message)
+    {
+    }
+
+    /** @inheritdoc */
+    public function suiteStart($name)
     {
         $this->output();
-        $this->output($name);
+        $this->output($this->separator());
+        $this->output("// Suite: {$name}");
+        $this->output($this->separator());
         $this->output();
     }
 
@@ -86,53 +169,24 @@ class ListFormatter extends Initializable implements IWriter
         );
     }
 
-    /** @inheritdoc */
-    public function endSUITE()
+    /**
+     * Reset current statement counters.
+     */
+    protected function reset()
     {
+        $this->assertionsCount = 0;
+        $this->assertionsSucceeded = 0;
+        $this->currentStatement = '';
+        $this->currentErrors = [];
     }
 
-    /** @inheritdoc */
-    public function startDESCRIBE($message)
+    /**
+     * Get prettified separator.
+     *
+     * @return string
+     */
+    protected function separator()
     {
-    }
-
-    /** @inheritdoc */
-    public function endDESCRIBE()
-    {
-    }
-
-    /** @inheritdoc */
-    public function startCONTEXT($message)
-    {
-    }
-
-    /** @inheritdoc */
-    public function endCONTEXT()
-    {
-    }
-
-    /** @inheritdoc */
-    public function startIT()
-    {
-    }
-
-    /** @inheritdoc */
-    public function endIT()
-    {
-    }
-
-    /** @inheritdoc */
-    public function contentIT($message)
-    {
-    }
-
-    /** @inheritdoc */
-    public function contentSUCCESS()
-    {
-    }
-
-    /** @inheritdoc */
-    public function contentFAILURE($message)
-    {
+        return '/* ' . str_repeat('-', 60) . ' */';
     }
 }

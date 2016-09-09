@@ -1,5 +1,9 @@
 <?php namespace Describe\Contracts;
 
+/**
+ * Interface IWriter
+ * @package Describe\Contracts
+ */
 interface IWriter
 {
     /**
@@ -7,63 +11,71 @@ interface IWriter
      *
      * @param string $name
      */
-    public function startSUITE($name);
+    public function suiteStart($name);
 
     /**
      * Output suite closing.
+     *
+     * @param string $name
      */
-    public function endSUITE();
+    public function suiteEnd($name);
 
     /**
      * Output describe opening.
      *
      * @param string $message
      */
-    public function startDESCRIBE($message);
+    public function describeStart($message);
 
     /**
      * Output describe closing.
+     *
+     * @param string $message
      */
-    public function endDESCRIBE();
+    public function describeEnd($message);
 
     /**
      * Output context opening.
      *
      * @param string $message
      */
-    public function startCONTEXT($message);
+    public function contextStart($message);
 
     /**
      * Output context closing.
-     */
-    public function endCONTEXT();
-
-    /**
-     * Output it opening.
-     */
-    public function startIT();
-
-    /**
-     * Output it closing.
-     */
-    public function endIT();
-
-    /**
-     * Output it content.
      *
      * @param string $message
      */
-    public function contentIT($message);
+    public function contextEnd($message);
+
+    /**
+     * Output it opening.
+     *
+     * @param string $message
+     */
+    public function itStart($message);
+
+    /**
+     * Output it closing.
+     *
+     * @param string $message
+     */
+    public function itEnd($message);
+
+    /**
+     * Output before assertion.
+     */
+    public function onBefore();
 
     /**
      * Output assertion success.
      */
-    public function contentSUCCESS();
+    public function onSuccess();
 
     /**
      * Output assertion failure.
      *
      * @param string $message
      */
-    public function contentFAILURE($message);
+    public function onFailure($message);
 }

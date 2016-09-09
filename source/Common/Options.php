@@ -3,6 +3,10 @@
 use Describe\Contracts\IOptions;
 use Exception;
 
+/**
+ * Class Options
+ * @package Describe\Common
+ */
 class Options implements IOptions
 {
     /** @var string */

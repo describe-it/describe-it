@@ -3,6 +3,10 @@
 use Describe\Contracts\IParameters;
 use Exception;
 
+/**
+ * Class Parameters
+ * @package Describe\Common
+ */
 class Parameters implements IParameters
 {
     const FLAG_PATTERN = '/^\-\-[a-zA-Z\-]+$/';
@@ -55,6 +59,12 @@ class Parameters implements IParameters
         $name = preg_replace('/[\-]{2}/', '', $parts[0]);
         $value = $parts[1];
         $this->parameters[$name] = $value;
+    }
+
+    /** @inheritdoc */
+    public function has($name)
+    {
+        return array_key_exists($name, $this->parameters);
     }
 
     /** @inheritdoc */

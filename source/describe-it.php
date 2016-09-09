@@ -8,11 +8,16 @@ use Describe\Common\Options;
 use Describe\Common\Outputs;
 use Describe\Common\Parameters;
 use Describe\Contracts\IEvents;
+use Describe\Contracts\IFiles;
 use Describe\Contracts\IOptions;
 use Describe\Contracts\IParameters;
+use Describe\Contracts\IRunner;
+use Describe\Runner\TestFiles;
+use Describe\Runner\TestRunner;
+use Describe\Runner\TestSuite;
 
 /* ---------------------------------- */
-// Creating events
+// Creating event emitter
 /* ---------------------------------- */
 
 /** @var IEvents $events */
@@ -50,8 +55,38 @@ $options = new Options(getcwd(), $parameters->get('options'), [
 $outputs = new Outputs();
 $outputs->create($options->get('formatter'));
 
+foreach ($options->get('outputs') as $output)
+{
+    $outputs->create($output);
+}
 
 /* ---------------------------------- */
-// Test runner & execution
+// Create test runner
 /* ---------------------------------- */
 
+/** @var IFiles $files */
+$files = new TestFiles(getcwd());
+
+/** @var IRunner $runner */
+$runner = new TestRunner($outputs);
+
+/* ---------------------------------- */
+// Schedule test suites
+/* ---------------------------------- */
+
+foreach ($options->get('suites') as $suite)
+{
+    if (
+        !$parameters->has('suite')
+        || strtolower($parameters->get('suite')) == strtolower($suite['name'])
+    )
+    {
+        $runner->schedule(new TestSuite($events, $files, $outputs, $suite));
+    }
+}
+
+/* ---------------------------------- */
+// Execute tests
+/* ---------------------------------- */
+
+$runner->run();

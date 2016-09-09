@@ -3,6 +3,10 @@
 use Describe\Contracts\DescribeException;
 use Exception;
 
+/**
+ * Class Initializable
+ * @package Describe\Common
+ */
 abstract class Initializable
 {
     /**

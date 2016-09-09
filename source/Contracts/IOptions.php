@@ -1,5 +1,9 @@
 <?php namespace Describe\Contracts;
 
+/**
+ * Interface IOptions
+ * @package Describe\Contracts
+ */
 interface IOptions
 {
     /**

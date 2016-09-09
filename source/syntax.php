@@ -1,8 +1,7 @@
 <?php
 
 use Describe\Common\Binding;
-use Describe\Common\Node;
-use Describe\Contracts\INode;
+use Describe\Contracts\IEvents;
 use Describe\Contracts\ISyntax;
 use Expective\Expectation;
 
@@ -18,18 +17,9 @@ function describe($message, Closure $closure)
 {
     global $events;
 
-    $events->emmit(ISyntax::DESCRIBE, new Node(
-        ISyntax::DESCRIBE,
-        INode::OPENING,
-        $message
-    ));
-
+    $events->emmit(IEvents::SYNTAX, [ISyntax::DESCRIBE_START, $message]);
     $closure->__invoke();
-
-    $events->emmit(ISyntax::DESCRIBE, new Node(
-        ISyntax::DESCRIBE,
-        INode::CLOSING
-    ));
+    $events->emmit(IEvents::SYNTAX, [ISyntax::DESCRIBE_END, $message]);
 }
 
 /**
@@ -44,18 +34,9 @@ function context($message, Closure $closure)
 {
     global $events;
 
-    $events->emmit(ISyntax::CONTEXT, new Node(
-        ISyntax::CONTEXT,
-        INode::OPENING,
-        $message
-    ));
-
+    $events->emmit(IEvents::SYNTAX, [ISyntax::CONTEXT_START, $message]);
     $closure->__invoke();
-
-    $events->emmit(ISyntax::CONTEXT, new Node(
-        ISyntax::CONTEXT,
-        INode::CLOSING
-    ));
+    $events->emmit(IEvents::SYNTAX, [ISyntax::CONTEXT_END, $message]);
 }
 
 /**
@@ -70,18 +51,9 @@ function it($message, Closure $closure)
 {
     global $events;
 
-    $events->emmit(ISyntax::IT, new Node(
-        ISyntax::IT,
-        INode::OPENING,
-        $message
-    ));
-
+    $events->emmit(IEvents::SYNTAX, [ISyntax::IT_START, $message]);
     $closure->__invoke();
-
-    $events->emmit(ISyntax::IT, new Node(
-        ISyntax::IT,
-        INode::CLOSING
-    ));
+    $events->emmit(IEvents::SYNTAX, [ISyntax::IT_END, $message]);
 }
 
 /**
