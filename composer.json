@@ -19,11 +19,8 @@
         }
     ],
     "bin": [
-        "source/describe-it"
+        "bin/describe-it"
     ],
-    "config": {
-        "bin-dir": "bin"
-    },
     "autoload": {
         "psr-4": {
             "Describe\\": "source/"
@@ -33,7 +30,6 @@
         ]
     },
     "require": {
-        "evenement/evenement": "^2.0",
-        "lepczynski-s/expective": "^0.1.0"
+        "evenement/evenement": "^2.0"
     }
 }

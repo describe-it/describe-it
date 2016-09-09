@@ -14,7 +14,7 @@ describe('MyOtherClass', function ()
         it('Should not pass', function ()
         {
             expect(true)->to_be_not->equal_to(true);
-            expect(false)->to_be->type_of('integer');
+            expect(false)->to_have->type_of('integer');
         });
 
         it('And this should not too!', function ()
