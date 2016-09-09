@@ -38,7 +38,7 @@ describe('MyAwesomeClass', function() {
         });
         
         it('But this should not', function() {
-            expect(10)->to_be->same_as(10.0);
+            expect(10)->to_have->type_of('boolean');
         });
         
     });

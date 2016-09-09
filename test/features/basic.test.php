@@ -12,7 +12,7 @@ describe("MyClass", function ()
 
         it('Should not pass', function ()
         {
-            expect(true)->to_be_not->equal_to(false);
+            expect(true)->to_be_not->equal_to(true);
             expect(false)->to_be->same_as(true);
         });
 

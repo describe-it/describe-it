@@ -1,9 +1,8 @@
 <?php
 
-use Describe\Common\Binding;
 use Describe\Contracts\IEvents;
 use Describe\Contracts\ISyntax;
-use Expective\Expectation;
+use Describe\Expectations\Expectation;
 
 /**
  * Describe some component.
@@ -57,7 +56,7 @@ function it($message, Closure $closure)
 }
 
 /**
- * Create new expectation.
+ * Make an expectation.
  *
  * @param mixed $subject
  *
@@ -67,5 +66,5 @@ function expect($subject)
 {
     global $events;
 
-    return new Expectation($subject, new Binding($events));
+    return new Expectation($subject, $events);
 }
