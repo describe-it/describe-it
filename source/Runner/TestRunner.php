@@ -1,33 +1,43 @@
 <?php namespace Describe\Runner;
 
-use Describe\Common\Runner;
-use Describe\Contracts\IEvents;
+use Describe\Contracts\IRunner;
+use Describe\Contracts\ISuite;
+use Describe\Contracts\IWriter;
 
-class TestRunner extends Runner
+/**
+ * Class TestRunner
+ * @package Describe\Runner
+ */
+class TestRunner implements IRunner
 {
+    /** @var IWriter */
+    protected $writer;
+
+    /** @var ISuite[] */
+    protected $suites = [];
+
+    /**
+     * TestRunner constructor.
+     *
+     * @param IWriter $writer
+     */
+    public function __construct(IWriter $writer)
+    {
+        $this->writer = $writer;
+    }
+
+    /** @inheritdoc */
+    public function schedule(ISuite $suite)
+    {
+        $this->suites[] = $suite;
+    }
+
     /** @inheritdoc */
     public function run()
     {
-        foreach ($this->options->get('suites') as $suite)
+        foreach ($this->suites as $suite)
         {
-            // Fire current suite changed event
-            $this->events->emmit(IEvents::SUITE_CHANGED, $suite['name']);
-
-            $files = $this->files(
-                "{$this->options->get('cwd')}/{$suite['directory']}/",
-                ".{$this->options->get('suffix')}.php"
-            );
-
-            foreach ($files as $file)
-            {
-                /** @noinspection PhpIncludeInspection */
-                require($file);
-            }
+            $suite->execute();
         }
-    }
-
-    public function bind()
-    {
-
     }
 }

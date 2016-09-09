@@ -6,16 +6,19 @@ describe("MyClass", function ()
     {
         it('Should pass', function ()
         {
-            expect(true)->equal_to(true);
-            expect(true)->equal_to(true);
-            expect(1)->same_as(1);
+            expect(true)->to_be->equal_to(true);
+            expect(true)->to_be_not->same_as(false);
         });
 
         it('Should not pass', function ()
         {
-            expect(true)->equal_to(true);
-            expect(true)->not()->equal_to(true);
-            expect('a')->same_as('b');
+            expect(true)->to_be_not->equal_to(false);
+            expect(false)->to_be->same_as(true);
+        });
+
+        it('And this should pass too!', function ()
+        {
+            expect(10)->to_be->equal_to(10.0);
         });
     });
 });

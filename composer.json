@@ -4,9 +4,10 @@
     "description": "Lightweight PHP testing framework with describe-it syntax.",
     "type": "library",
     "keywords": [
-        "super",
-        "simple",
         "describe-it",
+        "lightweight",
+        "tdd",
+        "bdd",
         "testing",
         "framework"
     ],
@@ -28,10 +29,11 @@
             "Describe\\": "source/"
         },
         "files": [
-            "source/Global/syntax.php"
+            "source/syntax.php"
         ]
     },
     "require": {
-        "evenement/evenement": "^2.0"
+        "evenement/evenement": "^2.0",
+        "lepczynski-s/expective": "^0.1.0"
     }
 }

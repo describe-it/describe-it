@@ -1,12 +1,23 @@
 {
+    "formatter": {
+        "type": "list",
+        "indent": 4,
+        "passed": true,
+        "success": "+",
+        "failure": "-"
+    },
+    "outputs": [
+    ],
     "suites": [
         {
             "name": "Features",
-            "directory": "test/features"
+            "directory": "test/features",
+            "suffix": "test"
         },
         {
             "name": "Issues",
-            "directory": "test/issues"
+            "directory": "test/issues",
+            "suffix": "test"
         }
     ]
 }

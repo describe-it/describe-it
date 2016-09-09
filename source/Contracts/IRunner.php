@@ -1,18 +1,20 @@
 <?php namespace Describe\Contracts;
 
+/**
+ * Interface IRunner
+ * @package Describe\Contracts
+ */
 interface IRunner
 {
     /**
-     * Execute tests.
+     * Schedule test suite execution.
      *
-     * @return void
+     * @param ISuite $suite
      */
-    public function run();
+    public function schedule(ISuite $suite);
 
     /**
-     * Bind event listeners.
-     *
-     * @return void
+     * Execute test suites.
      */
-    public function bind();
+    public function run();
 }

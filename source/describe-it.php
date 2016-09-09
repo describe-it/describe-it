@@ -5,21 +5,28 @@ require 'vendor/autoload.php';
 
 use Describe\Common\Events;
 use Describe\Common\Options;
+use Describe\Common\Outputs;
 use Describe\Common\Parameters;
 use Describe\Contracts\IEvents;
-use Describe\Contracts\IFormatter;
+use Describe\Contracts\IFiles;
 use Describe\Contracts\IOptions;
 use Describe\Contracts\IParameters;
 use Describe\Contracts\IRunner;
-use Describe\Formatter\ListFormatter;
+use Describe\Contracts\IStackTracer;
+use Describe\Runner\TestFiles;
 use Describe\Runner\TestRunner;
+use Describe\Runner\TestSuite;
+use Describe\Utils\StackTracer;
 
 /* ---------------------------------- */
-// Creating events
+// Creating helpers
 /* ---------------------------------- */
 
 /** @var IEvents $events */
 $events = new Events();
+
+/** @var IStackTracer $tracer */
+$tracer = new StackTracer();
 
 /* ---------------------------------- */
 // Preparing environment
@@ -32,31 +39,65 @@ $parameters = new Parameters($argv, [
 
 /** @var IOptions $options */
 $options = new Options(getcwd(), $parameters->get('options'), [
-    'suffix'    => 'test',
-    'formatter' => 'list',
+    'formatter' => [
+        'type' => 'list',
+    ],
+    'outputs'   => [
+    ],
     'suites'    => [
         [
             'name'      => 'Default',
             'directory' => 'test',
+            'suffix'    => 'test',
         ],
     ],
 ]);
 
-// TODO: Overriding options from parameters.
-
 /* ---------------------------------- */
-// Creating formatter
+// Creating outputs
 /* ---------------------------------- */
 
-/** @var IFormatter $formatter */
-$formatter = new ListFormatter($events, $options);
-$formatter->bind();
+$outputs = new Outputs();
+$outputs->create($options->get('formatter'));
+
+foreach ($options->get('outputs') as $output)
+{
+    $outputs->create($output);
+}
 
 /* ---------------------------------- */
-// Test runner & execution
+// Create test runner
 /* ---------------------------------- */
+
+/** @var IFiles $files */
+$files = new TestFiles(getcwd());
 
 /** @var IRunner $runner */
-$runner = new TestRunner($events, $options);
-$runner->bind();
+$runner = new TestRunner($outputs);
+
+/* ---------------------------------- */
+// Schedule test suites
+/* ---------------------------------- */
+
+foreach ($options->get('suites') as $suite)
+{
+    if (
+        !$parameters->has('suite')
+        || strtolower($parameters->get('suite')) == strtolower($suite['name'])
+    )
+    {
+        $runner->schedule(new TestSuite(
+            $events,
+            $files,
+            $outputs,
+            $tracer,
+            $suite
+        ));
+    }
+}
+
+/* ---------------------------------- */
+// Execute tests
+/* ---------------------------------- */
+
 $runner->run();

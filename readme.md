@@ -9,9 +9,9 @@ therefore is **not considered to be production ready**.
 
 ### Installation
 
-Describe-it utilizes [Composer](https://getcomposer.org) 
+Describe-it utilizes [composer](https://getcomposer.org) 
 to manage it's dependencies - make sure you have 
-Composer installed on your system.
+composer installed on your system.
 
 ```bash
 $ composer require --dev lepczynski-s/describe-it
@@ -21,7 +21,7 @@ $ composer require --dev lepczynski-s/describe-it
 
 * command-line test-runner
 * test suites support
-* expect assertions
+* expect-style assertions
 * two formatters: dot & list
 * optional json configuration file
 
@@ -34,11 +34,11 @@ describe('MyAwesomeClass', function() {
     context('Some of its features', function() {
     
         it('Should pass', function() {
-            expect(10).equal_to(10.0);
+            expect(10)->to_be->equal_to(10.0);
         });
         
         it('But this should not', function() {
-            expect(10).same_as(10.0);
+            expect(10)->to_be->same_as(10.0);
         });
         
     });
@@ -51,16 +51,25 @@ You can configure describe-it using a `describe-it.json` file.
 
 ```json
 {
-    "formatter": "list",
-    "suffix": "test",
+    "formatter": {
+        "type": "list",
+        "indent": 4,
+        "passed": true,
+        "success": "+",
+        "failure": "-"
+    },
+    "outputs": [
+    ],
     "suites": [
         {
             "name": "Features",
-            "directory": "test/features"
+            "directory": "test/features",
+            "suffix": "test"
         },
         {
             "name": "Issues",
-            "directory": "test/issues"
+            "directory": "test/issues",
+            "suffix": "test"
         }
     ]
 }
@@ -68,8 +77,7 @@ You can configure describe-it using a `describe-it.json` file.
 
 ### Roadmap
 
-* refactoring (formatter & runner classes are a bit chaotic)
-* extract expectations to different package
+* execution context
 * dot formatter
 * tests & documentation
 * custom bootstrap file

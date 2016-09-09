@@ -1,28 +1,44 @@
 <?php namespace Describe\Contracts;
 
+/**
+ * Interface IEvents
+ * @package Describe\Contracts
+ */
 interface IEvents
 {
-    const SUITE_CHANGED = 'event.suite';
-    const ASSERTION_SUCCESS = 'event.assertion_success';
-    const ASSERTION_FAILURE = 'event.assertion_failure';
+    /** Syntax statement event */
+    const SYNTAX = 'event.syntax';
+
+    /** Before assertion event */
+    const BEFORE = 'event.before';
+
+    /** Assertion success event */
+    const SUCCESS = 'event.success';
+
+    /** Assertion failure event */
+    const FAILURE = 'event.failure';
 
     /**
      * Register event handler.
      *
      * @param string   $name
      * @param callable $handler
-     *
-     * @return void
      */
     public function register($name, $handler);
+
+    /**
+     * Remove event handler.
+     *
+     * @param string   $name
+     * @param callable $handler
+     */
+    public function remove($name, $handler);
 
     /**
      * Emmit an event.
      *
      * @param string $name
-     * @param mixed  $argument
-     *
-     * @return void
+     * @param mixed  $arguments
      */
-    public function emmit($name, $argument = null);
+    public function emmit($name, $arguments = []);
 }
